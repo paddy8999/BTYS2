@@ -36,14 +36,26 @@ public class InputFragment extends Fragment {
 
     private String date = "";
     private String time= "";
+    private String notes= "";
     private String user= "";
     private Float weight= null;
+    private Float sp02= null;
+    private Float pulse= null;
+    private Float bloodPressureSYS= null;
+    private Float bloodPressureDIA= null;
+    private Float temperatue= null;
     private String dateFinal= "";
 
     private EditText editTextDate;
     private EditText editTextTime;
+    private EditText editTextNotes;
     private AutoCompleteTextView autoCompleteTextViewUser;
     private EditText editTextWeight;
+    private EditText editTextSp02;
+    private EditText editTextPulse;
+    private EditText editTextBloodPressureSYS;
+    private EditText editTextBloodPressureDia;
+    private EditText editTextTemperature;
     private Button doneButton;
 
 
@@ -72,10 +84,16 @@ public class InputFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_input, container, false);
 
-        editTextWeight = (EditText)view.findViewById(R.id.edit_text_weight);
         editTextTime = (EditText) view.findViewById(R.id.edit_text_time);
         editTextDate = (EditText) view.findViewById(R.id.edit_text_date);
         autoCompleteTextViewUser = (AutoCompleteTextView) view.findViewById(R.id.user_autocomplete_text_view);
+        editTextNotes = (EditText) view.findViewById(R.id.edit_text_notes);
+        editTextWeight = (EditText)view.findViewById(R.id.edit_text_weight);
+        editTextSp02 = (EditText) view.findViewById(R.id.edit_text_sp02);
+        editTextPulse = (EditText) view.findViewById(R.id.edit_text_pulse);
+        editTextBloodPressureSYS = (EditText) view.findViewById(R.id.edit_text_blood_pressure_sys);
+        editTextBloodPressureDia = (EditText) view.findViewById(R.id.edit_text_blood_pressure_dia);
+        editTextTemperature = (EditText) view.findViewById(R.id.edit_text_temperature);
         doneButton = (Button)view.findViewById(R.id.done_button);
 
 
@@ -112,8 +130,9 @@ public class InputFragment extends Fragment {
 
         cursor.moveToFirst();
 
-        boolean addToArrayList = true;
-        ArrayList<String> usersTemp = new ArrayList<String>();
+        boolean addToArrayList;
+
+        ArrayList<String> usersTemp = new ArrayList<>();
         //usersTemp.add("Padraig");
         for(int i = 0; i<itemId;i++) {
             Log.d("for",""+i);
@@ -136,7 +155,7 @@ public class InputFragment extends Fragment {
         users=usersTemp.toArray(users);
 
         //Create Array Adapter
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.select_dialog_singlechoice, users);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.select_dialog_singlechoice, users);
 
         //Set the number of characters the user must type before the drop down list is shown
         autoCompleteTextViewUser.setThreshold(1);
@@ -206,24 +225,45 @@ public class InputFragment extends Fragment {
 
 
     public void inputIntoDatabase (View view){
-        Log.d("inputIntoDatabase", "1");
         date = editTextDate.getText().toString();
         time = editTextTime.getText().toString();
         user = autoCompleteTextViewUser.getText().toString();
+        notes = editTextNotes.getText().toString();
         try {
-            Log.d("inputIntoDatabase", "2.1");
             weight = Float.parseFloat(editTextWeight.getText().toString());
         } catch (java.lang.NumberFormatException e) {
             weight = null;
-            Log.d("inputIntoDatabase", "2.2");
+        }
+        try {
+            sp02 = Float.parseFloat(editTextSp02.getText().toString());
+        } catch (java.lang.NumberFormatException e) {
+            sp02 = null;
+        }
+        try {
+            pulse = Float.parseFloat(editTextPulse.getText().toString());
+        } catch (java.lang.NumberFormatException e) {
+            pulse = null;
+        }
+        try {
+            bloodPressureSYS = Float.parseFloat(editTextBloodPressureSYS.getText().toString());
+        } catch (java.lang.NumberFormatException e) {
+            bloodPressureSYS = null;
+        }
+        try {
+            bloodPressureDIA = Float.parseFloat(editTextBloodPressureDia.getText().toString());
+        } catch (java.lang.NumberFormatException e) {
+            bloodPressureDIA = null;
+        }
+        try {
+            temperatue = Float.parseFloat(editTextTemperature.getText().toString());
+        } catch (java.lang.NumberFormatException e) {
+            temperatue = null;
         }
 
         if (((date.equals("")) || (time.equals(""))) || (user.equals(""))) {
-            Snackbar.make(view, "Date, Time or User is null", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "User is null", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            Log.d("inputIntoDatabase", "3.1");
         } else {
-            Log.d("inputIntoDatabase", "3.2"+user);
             char[] dateTemp = new char[16];
             date.getChars(6, 10, dateTemp, 0);
             dateTemp[4] = '-';
@@ -237,19 +277,21 @@ public class InputFragment extends Fragment {
             DatabaseHandler dbHelper = new DatabaseHandler(view.getContext());
             SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-            // Create a new map of values, where column names are the keys
             ContentValues values = new ContentValues();
             values.put(DatabaseHandler.TableInfo.COLUMN_NAME_DATE, dateFinal);
             values.put(DatabaseHandler.TableInfo.COLUMN_NAME_USER_NAME, user);
+            values.put(DatabaseHandler.TableInfo.COLUMN_NAME_NOTES, notes);
             values.put(DatabaseHandler.TableInfo.COLUMN_NAME_WEIGHT, weight);
+            values.put(DatabaseHandler.TableInfo.COLUMN_NAME_SP02, sp02);
+            values.put(DatabaseHandler.TableInfo.COLUMN_NAME_PULSE_RATE, pulse);
+            values.put(DatabaseHandler.TableInfo.COLUMN_NAME_BLOOD_PRESSURE_SYS, bloodPressureSYS);
+            values.put(DatabaseHandler.TableInfo.COLUMN_NAME_BLOOD_PRESSURE_DIA, bloodPressureDIA);
+            values.put(DatabaseHandler.TableInfo.COLUMN_NAME_TEMPERATURE, temperatue);
 
-            // Insert the new row, returning the primary key value of the new row
-            long newRowId;
-            newRowId = db.insert(
+            db.insert(
                     DatabaseHandler.TableInfo.TABLE_NAME,
                     null,
                     values);
-            Log.d("inputIntoDatabase", "4");
         }
 
 

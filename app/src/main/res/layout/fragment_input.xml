@@ -4,117 +4,267 @@
     android:layout_height="match_parent"
     tools:context="io.github.paddy8999.btys2.InputFragment"
 
+
+
     >
 
 
-    <ScrollView
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:id="@+id/scrollView"
+            android:layout_weight="1">
 
-            <TableRow
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                >
 
-                <TextView
-                    android:layout_width="0dp"
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Date: "
-                    android:layout_weight="1"/>
+                    android:layout_weight="1">
 
-                <EditText
-                    android:focusable="false"
-                    android:id="@+id/edit_text_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Date"
-                    android:singleLine="true"/>
-            </TableRow>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Date: "
+                        android:layout_weight="1"/>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Time: "
-                    android:layout_weight="1"/>
+                    <EditText
+                        android:focusable="false"
+                        android:id="@+id/edit_text_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="Date"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"/>
+                </TableRow>
 
-                <EditText
-                    android:focusable="false"
-                    android:id="@+id/edit_text_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Time"
-                    android:singleLine="true"/>
-            </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Time: "
+                        android:layout_weight="1"/>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="User: "
-                    android:layout_weight="1"/>
-                <AutoCompleteTextView
-                    android:layout_width="0dp"
-                    android:id="@+id/user_autocomplete_text_view"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="User"
-                    />
-            </TableRow>
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Weight: "
-                    android:layout_weight="1"
-                    />
+                    <EditText
+                        android:focusable="false"
+                        android:id="@+id/edit_text_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="Time"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"/>
+                </TableRow>
 
-                <EditText
-                    android:id="@+id/edit_text_weight"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Weight"
-                    android:singleLine="true"
-                    android:digits="0123456789."
-                    android:inputType="number"
-                    />
-            </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="User: "
+                        android:layout_weight="1"/>
+                    <AutoCompleteTextView
+                        android:layout_width="0dp"
+                        android:id="@+id/user_autocomplete_text_view"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="User"
+                        android:singleLine="true"
+                        android:gravity="center_vertical"
+                        />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Notes: "
+                        android:layout_weight="1"
+                        />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="New Button"
-                    android:id="@+id/done_button"
-                    android:layout_weight="3"
-                    android:layout_gravity="center|bottom"/>
+                    <EditText
+                        android:id="@+id/edit_text_notes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="Notes"
+                        android:singleLine="false"
+                        android:gravity="center_vertical"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Weight: "
+                        android:layout_weight="1"
+                        />
 
-            </TableRow>
+                    <EditText
+                        android:id="@+id/edit_text_weight"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="kg"
+                        android:singleLine="true"
+                        android:digits="0123456789."
+                        android:inputType="number"
+                        android:gravity="center_vertical"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Oxygen in \nBlood: \n"
+                        android:layout_weight="1"
+                        />
 
-        </LinearLayout>
+                    <EditText
+                        android:id="@+id/edit_text_sp02"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="%"
+                        android:singleLine="true"
+                        android:digits="0123456789."
+                        android:inputType="number"
+                        android:gravity="center_vertical"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Pulse: "
+                        android:layout_weight="1"
+                        />
 
-    </ScrollView>
+                    <EditText
+                        android:id="@+id/edit_text_pulse"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="bmp"
+                        android:singleLine="true"
+                        android:digits="0123456789."
+                        android:inputType="number"
+                        android:gravity="center_vertical"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Blood \nPressure \nSYS: \n"
+                        android:layout_weight="1"
+                        />
+
+                    <EditText
+                        android:id="@+id/edit_text_blood_pressure_sys"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="mmHg"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:gravity="center_vertical"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Blood \nPressure \nDIA: \n"
+                        android:layout_weight="1"
+                        />
+
+                    <EditText
+                        android:id="@+id/edit_text_blood_pressure_dia"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="mmHg"
+                        android:singleLine="true"
+                        android:digits="0123456789."
+                        android:inputType="number"
+                        android:gravity="center_vertical"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Temperature: "
+                        android:layout_weight="1"
+                        />
+
+                    <EditText
+                        android:id="@+id/edit_text_temperature"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:hint="&#176;C"
+                        android:singleLine="true"
+                        android:digits="0123456789."
+                        android:inputType="number"
+                        android:gravity="center_vertical"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                </TableRow>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:id="@+id/done_button"
+            android:layout_weight="0"
+            android:layout_gravity="center|bottom"/>
+    </LinearLayout>
 
 </FrameLayout>
 

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import io.github.paddy8999.btys2.R;
 
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment {
             Log.d("length of database", "0");}
 
 
-        int noOfFragments = 0;
+        int noOfFragments;
 
         if(lengthOfDatabase<=10){
             noOfFragments = lengthOfDatabase;
@@ -74,14 +75,18 @@ public class HomeFragment extends Fragment {
             noOfFragments = 10;
         }
 
-
-        for(int x = 0; x<noOfFragments; x++){
+        int x;
+        for(x = 0; x<noOfFragments; x++){
             fragmentTransaction.add(R.id.home_list, new HomeListRowFragment(), x+"");
             Log.d("frag", "x=" + x);
         }
+        Log.d("frag", "x=" + x);
 
 
         fragmentTransaction.commit();
+
+        FrameLayout frame = (FrameLayout) v.findViewById(R.id.home_frame);
+        Log.d("hf", "" + frame.getWidth());
 
 
 

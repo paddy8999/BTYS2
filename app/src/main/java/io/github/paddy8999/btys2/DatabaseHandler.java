@@ -7,9 +7,6 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 
-/**
- * Created by padraig on 20/12/15.
- */
 public class DatabaseHandler extends SQLiteOpenHelper{
 
     public static abstract class TableInfo implements BaseColumns {
@@ -25,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
         public static final String COLUMN_NAME_TEMPERATURE = "temperature";
     }
 
-    public static final int DATABASE_VERSION = 10;
+    public static final int DATABASE_VERSION = 11;
     public static final String DATABASE_NAME = "MedicalData.db";
 
     private static final String TEXT_TYPE = " TEXT";
