@@ -7,6 +7,7 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 
+
 public class DatabaseHandler extends SQLiteOpenHelper{
 
     public static abstract class TableInfo implements BaseColumns {
