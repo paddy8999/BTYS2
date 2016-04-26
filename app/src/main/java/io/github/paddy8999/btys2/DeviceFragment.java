@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -37,6 +40,7 @@ public class DeviceFragment extends Fragment {
     private BluetoothAdapter mBluetoothAdapter;
     private boolean mScanning;
     private Handler mHandler;
+    private BluetoothLeService mBluetoothLeService;
 
     private Button deviceButton;
     private static final int REQUEST_ENABLE_BT = 1;
@@ -48,7 +52,8 @@ public class DeviceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mBluetoothLeService = new BluetoothLeService(this.getActivity());
+        mBluetoothLeService.initialize(getActivity());
         final BluetoothManager bluetoothManager =
                 (BluetoothManager) getActivity().getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
@@ -102,7 +107,28 @@ public class DeviceFragment extends Fragment {
         return v;
     }
 
+    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
 
+             if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
+                 displayPulse();
+            /*} else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+                displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+            */}
+        }
+    };
+
+    private void displayPulse(){
+        List<BluetoothGattService> a  = mBluetoothLeService.getSupportedGattServices();
+        for(int i =0; i< a.size();i++){
+            Object b[] = a.get(i).getCharacteristics().toArray();
+            for(int j =0; j< b.length;j++){
+                Log.d(i+ ":"+j,b[j].toString());
+            }
+        }
+    }
 
     private void scanLeDevice(final boolean enable) {
         if (enable) {
@@ -164,6 +190,8 @@ public class DeviceFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
+
+                        mBluetoothLeService.connect(mLeDevices.get(0).getAddress());
 
                     }
                 });
