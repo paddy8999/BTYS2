@@ -1,19 +1,23 @@
 package io.github.paddy8999.btys2;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import io.github.paddy8999.btys2.R;
+import java.util.ArrayList;
+
+//import io.github.paddy8999.btys2.R;
 
 public class HistoryFragment extends Fragment {
 
@@ -30,17 +34,17 @@ public class HistoryFragment extends Fragment {
             DatabaseHandler.TableInfo.COLUMN_NAME_TEMPERATURE
     };
     private String sortOrder =
-            DatabaseHandler.TableInfo.COLUMN_NAME_DATE + " ASC LIMIT 1";
+            DatabaseHandler.TableInfo.COLUMN_NAME_DATE + " DESC";
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentManager fragmentManager = getActivity().getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        DatabaseHandler dbHelper = new DatabaseHandler(this.getContext());
+        DatabaseHandler dbHelper = new DatabaseHandler(getActivity());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -74,7 +78,20 @@ public class HistoryFragment extends Fragment {
 
         int x;
         for(x = 0; x<noOfFragments; x++){
-            fragmentTransaction.add(R.id.home_list, new HomeListRowFragment(), x+"");
+            cursor.moveToPosition(x);
+            Bundle bundle = new Bundle();
+            bundle.putString("date", cursor.getString(1));
+            bundle.putString("user", cursor.getString(2));
+            bundle.putString("notes", cursor.getString(3));
+            bundle.putString("weight", cursor.getString(4));
+            bundle.putString("sp02", cursor.getString(5));
+            bundle.putString("pulse", cursor.getString(6));
+            bundle.putString("bloodPressureSys", cursor.getString(7));
+            bundle.putString("bloodPressureDia", cursor.getString(8));
+            bundle.putString("temperature", cursor.getString(9));
+            Fragment frag = new HomeListRowFragment();
+            frag.setArguments(bundle);
+            fragmentTransaction.add(R.id.home_list, frag, x+"");
             Log.d("frag", "x=" + x);
         }
         Log.d("frag", "x=" + x);

@@ -10,6 +10,7 @@
     <string name="input_name">Input Data</string>
     <string name="history_name">Results History</string>
     <string name="about_name">About App</string>
+    <string name="device_name">Input from Device</string>
 
     <string name="home">Home</string>
     <string name="input">Input Data</string>

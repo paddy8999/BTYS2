@@ -1,5 +1,6 @@
 package io.github.paddy8999.btys2;
         import android.app.DatePickerDialog;
+        import android.app.Fragment;
         import android.app.TimePickerDialog;
         import android.content.ContentValues;
         import android.content.DialogInterface;
@@ -11,7 +12,6 @@ package io.github.paddy8999.btys2;
         import android.support.annotation.Nullable;
         import android.support.design.widget.FloatingActionButton;
         import android.support.design.widget.Snackbar;
-        import android.support.v4.app.Fragment;
         import android.text.InputType;
         import android.text.format.Time;
         import android.util.Log;
@@ -99,7 +99,7 @@ public class InputFragment extends Fragment {
 
         //view.findViewById(R.id.done_button).requestFocus();
 
-        DatabaseHandler dbHelper = new DatabaseHandler(this.getContext());
+        DatabaseHandler dbHelper = new DatabaseHandler(this.getActivity());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.query(
@@ -173,7 +173,7 @@ public class InputFragment extends Fragment {
 
                 editTextDate.setInputType(InputType.TYPE_NULL);
                 Calendar newCalendar = Calendar.getInstance();
-                DatePickerDialog datePicker = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
@@ -197,7 +197,7 @@ public class InputFragment extends Fragment {
 
                 editTextTime.setInputType(InputType.TYPE_NULL);
                 Calendar newCalendar = Calendar.getInstance();
-                TimePickerDialog timePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog timePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
 
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                         Calendar newDate1 = Calendar.getInstance();

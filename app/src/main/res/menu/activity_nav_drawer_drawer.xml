@@ -11,6 +11,10 @@
 
             android:title="@string/input_name" />
         <item
+            android:id="@+id/nav_device"
+
+            android:title="@string/device_name" />
+        <item
             android:id="@+id/nav_history"
 
             android:title="@string/history_name" />
@@ -18,6 +22,7 @@
             android:id="@+id/nav_about"
 
             android:title="@string/about_name" />
+
     </group>
     <!--
     android:icon="@drawable/ic_menu_manage"

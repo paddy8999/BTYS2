@@ -1,40 +1,15 @@
 package io.github.paddy8999.btys2;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.net.Uri;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.LayoutDirection;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 public class HomeListRowFragment extends Fragment {
-
-    private String[] projection = {
-            DatabaseHandler.TableInfo._ID,
-            DatabaseHandler.TableInfo.COLUMN_NAME_DATE,
-            DatabaseHandler.TableInfo.COLUMN_NAME_USER_NAME,
-            DatabaseHandler.TableInfo.COLUMN_NAME_NOTES,
-            DatabaseHandler.TableInfo.COLUMN_NAME_WEIGHT,
-            DatabaseHandler.TableInfo.COLUMN_NAME_SP02,
-            DatabaseHandler.TableInfo.COLUMN_NAME_PULSE_RATE,
-            DatabaseHandler.TableInfo.COLUMN_NAME_BLOOD_PRESSURE_SYS,
-            DatabaseHandler.TableInfo.COLUMN_NAME_BLOOD_PRESSURE_DIA,
-            DatabaseHandler.TableInfo.COLUMN_NAME_TEMPERATURE
-    };
-    private String sortOrder =
-            DatabaseHandler.TableInfo.COLUMN_NAME_DATE + " DESC";
-
+    private View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,95 +20,62 @@ public class HomeListRowFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        DatabaseHandler dbHelper = new DatabaseHandler(this.getContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        View view;
 
+        v = inflater.inflate(R.layout.fragment_home_list_row, container, false);
 
-        Cursor cursor = db.query(
-                DatabaseHandler.TableInfo.TABLE_NAME,  // The table to query
-                projection,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
-        );
+        TextView dateValue = (TextView) v.findViewById(R.id.dateValue);
+        dateValue.setText(getArguments().getString("date"));
 
-        cursor.moveToPosition(Integer.parseInt(getTag()));
+        TextView userValue = (TextView) v.findViewById(R.id.userValue);
+        userValue.setText(getArguments().getString("user"));
 
-        LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int dim16Dp = 16 * (getResources().getDisplayMetrics().densityDpi) / 160;
-        linearLayoutParams.setMargins(dim16Dp, dim16Dp, dim16Dp, 0);
+        setTextViewValues("notes", R.id.notesValue);
+        setTextViewValues("weight", R.id.weightValue);
+        setTextViewValues("sp02", R.id.sp02Value);
+        setTextViewValues("pulse", R.id.pulseValue);
+        setTextViewValuesBloodPressure("bloodPressureSys", R.id.sysValue,"bloodPressureDia", R.id.diaValue);
+        setTextViewValues("temperature", R.id.temperatureValue);
 
+        return v;
+    }
 
-        LinearLayout linearLayout = new LinearLayout(this.getContext());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setLayoutParams(linearLayoutParams);
-        linearLayout.setBackgroundColor(Color.WHITE);
+    private void setTextViewValues(String varName, int id){
+        String temp = getArguments().getString(varName);
+        TextView textView = (TextView) v.findViewById(id);
+        if(temp!=null&&!(temp.isEmpty())){
 
-        for(int i =1;i<10;i++){
-            try{
-                String a = cursor.getString(i);
-                LinearLayout horLinearLayout1 = new LinearLayout(this.getContext());
-                horLinearLayout1.setOrientation(LinearLayout.HORIZONTAL);
-                LinearLayout.LayoutParams horLinearLayout1Params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                horLinearLayout1.setLayoutParams(horLinearLayout1Params);
-                linearLayout.addView(horLinearLayout1);
-
-                TextView timeLabel = new TextView(this.getContext());
-                timeLabel.setGravity(Gravity.LEFT);
-                switch (i) {
-                    case 1:
-                        timeLabel.setText("Date & Time");
-                        break;
-                    case 2:
-                        timeLabel.setText("User");
-                        break;
-                    case 3:
-                        timeLabel.setText("Notes");
-                        break;
-                    case 4:
-                        timeLabel.setText("Weight");
-                        break;
-                    case 5:
-                        timeLabel.setText("Sp02");
-                        break;
-                    case 6:
-                        timeLabel.setText("Pulse");
-                        break;
-                    case 7:
-                        timeLabel.setText("Blood Pressure Sys");
-                        break;
-                    case 8:
-                        timeLabel.setText("Blood Pressure Dia");
-                        break;
-                    case 9:
-                        timeLabel.setText("Temperature");
-                        break;
-
-                }
-
-                timeLabel.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1F));
-                horLinearLayout1.addView(timeLabel);
-
-                TextView timeStamp = new TextView(this.getContext());
-                timeStamp.setGravity(Gravity.RIGHT);
-                timeStamp.setText(a);
-                timeStamp.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1F));
-                horLinearLayout1.addView(timeStamp);
-
-            }catch(java.lang.NullPointerException e){
-
-            }
-
+            textView.setText(temp);
+        }else{
+            LinearLayout a  = (LinearLayout) textView.getParent();
+            a.setVisibility(View.GONE);
         }
 
-
-        view = linearLayout;
-        return view;
-        //return inflater.inflate(R.layout.fragment_home_list_row, container, false);
     }
+
+    private void setTextViewValuesBloodPressure(String varNameSys, int idSys, String varNameDia, int idDia){
+        String sys = getArguments().getString(varNameSys);
+        String dia = getArguments().getString(varNameDia);
+        TextView textViewSys = (TextView) v.findViewById(idSys);
+        TextView textViewDia = (TextView) v.findViewById(idDia);
+
+        if((sys==null||sys.isEmpty())&&(dia==null||dia.isEmpty())){
+            LinearLayout a  = (LinearLayout) textViewDia.getParent().getParent();
+            a.setVisibility(View.GONE);
+            return;
+        }
+        textViewDia.setText("???");
+        textViewSys.setText("???");
+
+        if(sys!=null&&!(sys.isEmpty())){
+            textViewSys.setText(sys);
+        }
+
+        if(dia!=null&&!(dia.isEmpty())){
+            textViewDia.setText(dia);
+        }
+        return;
+    }
+
 }
 
 
